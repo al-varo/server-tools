@@ -76,7 +76,7 @@ class account_invoice(models.Model):
                   uos_old = invline_old.uos_id.name
                   uos_new = uos_old
                   if uos_id_val:
-                    product_uom = self.env['product.upm'].search([('id', '=', uos_id_val)])
+                    product_uom = self.env['product.uom'].search([('id', '=', uos_id_val)])
                     uos_new = product_uom.name
                   qty_old = sep('%.1f'%(invline_old.quantity)) + " " + uos_old
                   qty_new = sep('%.1f'%(quantity)) + " " + uos_new
