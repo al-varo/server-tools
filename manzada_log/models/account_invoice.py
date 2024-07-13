@@ -97,10 +97,10 @@ class account_invoice(models.Model):
                 product_new = line[2].get('name')
                 message=message + "%E2%9E%95" + product_new + "%0A%0A"
         if message != "":
-          send_telegram(origin + " " + toko + "%0A%0A" + message,uid)
+          send_telegram(origin_old + " " + toko + "%0A%0A" + message,uid)
     except Exception as e:
       # If any other exception occurs, execute this code
-      send_telegram(e, 1)
+      send_telegram(str(e), 1)
     finally:
       # This code will always execute, regardless of whether an exception occurs or not
       return super(account_invoice, self).write(vals)
