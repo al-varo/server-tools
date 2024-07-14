@@ -16,7 +16,7 @@ def send_telegram(message, user_id, model):
   elif user_id == 9:
     token = "7212599223:AAEe2acDQYFq7Wy0X64eSptbXfsh1Co21Ek"
     if model == "sale.order":
-      token = "so"
+      chat_id = "-1002234341381"
     if model == "account.invoice":
       chat_id = "-1002186361212"
   # Top Office
