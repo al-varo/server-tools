@@ -2,29 +2,44 @@ from openerp import models, fields, api
 import re, datetime
 import requests
 
-def send_telegram(message, user_id):
+def send_telegram(message, user_id, model):
   token = "7263009682:AAGHf5d4k484T_5da4b9yLa9JDvUSd8Sl2o"
   chat_id = "-1002196534446"
   # Dani
   if user_id == 11:
-    token = "7090690825:AAGDtcVTUNPfgsLkrRItjocj8uDuHbE4Szs"
-    chat_id = "-1002232803613"
+    if model == "sale.order":
+      token
+    if model == "account.invoice":
+      token = "7090690825:AAGDtcVTUNPfgsLkrRItjocj8uDuHbE4Szs"
+      chat_id = "-1002232803613"
   # Agus
   elif user_id == 9:
-    token = "7212599223:AAEe2acDQYFq7Wy0X64eSptbXfsh1Co21Ek"
-    chat_id = "-1002186361212"
+    if model == "sale.order":
+      token = "so"
+    if model == "account.invoice":
+      token = "7212599223:AAEe2acDQYFq7Wy0X64eSptbXfsh1Co21Ek"
+      chat_id = "-1002186361212"
   # Top Office
   elif user_id == 12:
-    token = "7257697185:AAEIJcwtXcRq-3vsTYWbpFDiuwAgEPN7PDc"
-    chat_id = "-1002247585047"
+    if model == "sale.order":
+      token
+    if model == "account.invoice":
+      token = "7257697185:AAEIJcwtXcRq-3vsTYWbpFDiuwAgEPN7PDc"
+      chat_id = "-1002247585047"
   # Zul
   elif user_id == 5:
-    token = "7491181830:AAGM7iZVtxqJH624Zno2oaCrqGMTv81jbzY"
-    chat_id = "-1002166849753"
+    if model == "sale.order":
+      token
+    if model == "account.invoice":
+      token = "7491181830:AAGM7iZVtxqJH624Zno2oaCrqGMTv81jbzY"
+      chat_id = "-1002166849753"
   # Dev
   else:
-    token = "7263009682:AAGHf5d4k484T_5da4b9yLa9JDvUSd8Sl2o"
-    chat_id = "-1002196534446"
+    if model == "sale.order":
+      token
+    if model == "account.invoice":
+      token = "7263009682:AAGHf5d4k484T_5da4b9yLa9JDvUSd8Sl2o"
+      chat_id = "-1002196534446"
     message = message + "%0AUser ID : " + str(user_id)
   url = "https://api.telegram.org/bot"+token+"/sendMessage?chat_id="+chat_id+"&text="+message
   response = requests.get(url).json()
@@ -100,10 +115,10 @@ class sale_order(models.Model):
                 product_new = line[2].get('name')
                 message=message + "%E2%9E%95" + product_new + "%0A%0A"
         if message != "":
-          send_telegram(origin_old + " " + toko + "%0A%0A" + message,uid)
+          send_telegram(origin_old + " " + toko + "%0A%0A" + message,uid,"sale.order")
     except Exception as e:
       # If any other exception occurs, execute this code
-      send_telegram(str(e), 1)
+      send_telegram(str(e), 1, "sale.order")
     finally:
       # This code will always execute, regardless of whether an exception occurs or not
       return super(sale_order, self).write(vals)
@@ -174,10 +189,10 @@ class account_invoice(models.Model):
                 product_new = line[2].get('name')
                 message=message + "%E2%9E%95" + product_new + "%0A%0A"
         if message != "":
-          send_telegram(origin_old + " " + toko + "%0A%0A" + message,uid)
+          send_telegram(origin_old + " " + toko + "%0A%0A" + message,uid,"account.invoice")
     except Exception as e:
       # If any other exception occurs, execute this code
-      send_telegram(str(e), 1)
+      send_telegram(str(e), 1, "account.invoice")
     finally:
       # This code will always execute, regardless of whether an exception occurs or not
       return super(account_invoice, self).write(vals)
