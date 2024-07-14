@@ -56,64 +56,63 @@ class sale_order(models.Model):
   def write(self, vals):
     try:
       uid = self.env.uid
-      if self.type == "sale_order":
-        origin_old=self.origin
-        toko = self.partner_id.name
-        message = ""
-        lines_new = vals.get('order_line')
-        state_old = self.state
-        state_new = vals.get('state')
+      origin_old=self.origin
+      toko = self.partner_id.name
+      message = ""
+      lines_new = vals.get('order_line')
+      state_old = self.state
+      state_new = vals.get('state')
         
-        # Cek Jika ada perubahan status s.o
-        if state_new:
-          if state_new != state_old:
-            message = message + state_old + " %E2%9E%A1%EF%B8%8F " + state_new + "%0A%0A"
+      # Cek Jika ada perubahan status s.o
+      if state_new:
+        if state_new != state_old:
+          message = message + state_old + " %E2%9E%A1%EF%B8%8F " + state_new + "%0A%0A"
 
-        # Cek Jika ada perubahan baris s.o
-        if lines_new:
-          for line in lines_new:
-            operation_flag=line[0]
-            # Jika dihapus
-            if operation_flag == 2:
-              soline_old = self.env['sale.order.line'].search([('id', '=', line[1])])
-              if soline_old:
-                message = message + "%E2%9D%8C" + soline_old.product_id.name + "%0A%0A"
-            # Cek Jika Tipe Data Dictionary
-            if isinstance(line[2], dict):
-              product_id_val = line[2].get('product_id')
+      # Cek Jika ada perubahan baris s.o
+      if lines_new:
+        for line in lines_new:
+          operation_flag=line[0]
+          # Jika dihapus
+          if operation_flag == 2:
+            soline_old = self.env['sale.order.line'].search([('id', '=', line[1])])
+            if soline_old:
+              message = message + "%E2%9D%8C" + soline_old.product_id.name + "%0A%0A"
+          # Cek Jika Tipe Data Dictionary
+          if isinstance(line[2], dict):
+            product_id_val = line[2].get('product_id')
+            product_new = line[2].get('name')
+            quantity=line[2].get('product_uom_qty')
+            uos_id_val = line[2].get('product_uom')
+            harga=line[2].get('price_unit')
+            soline_old = self.env['sale.order.line'].search([('id', '=', line[1])])
+            # Jika Edit baris
+            if soline_old:
+              product_old = soline_old.product_id.name
+              # Perubahan Kuantitas
+              if quantity:
+                uos_old = soline_old.product_uom.name
+                uos_new = uos_old
+                if uos_id_val:
+                  product_uom = self.env['product.uom'].search([('id', '=', uos_id_val)])
+                  uos_new = product_uom.name
+                qty_old = sep('%.1f'%(soline_old.product_uom_qty)) + " " + uos_old
+                qty_new = sep('%.1f'%(quantity)) + " " + uos_new
+                if qty_old != qty_new:
+                  message=message + product_old + "%0A Qty " +  qty_old + " %E2%9E%A1%EF%B8%8F " + qty_new + "%0A%0A"
+              # Perubahan Harga
+              if harga:
+                harga_old = sep('%.1f'%(soline_old.price_unit))
+                harga_new = sep('%.1f'%(harga))
+                if harga_old != harga_new:
+                  message=message + product_old + "%0A Harga " + harga_old + " %E2%9E%A1%EF%B8%8F " + harga_new + "%0A%0A"
+              # Perubahan Product
+              if product_id_val:
+                if product_id_val != soline_old.product_id:
+                  message = message + product_old + "%0A %E2%AC%87%EF%B8%8F %0A" + product_new + "%0A%0A"
+            # Jika Baris Baru
+            else:
               product_new = line[2].get('name')
-              quantity=line[2].get('product_uom_qty')
-              uos_id_val = line[2].get('product_uom')
-              harga=line[2].get('price_unit')
-              soline_old = self.env['sale.order.line'].search([('id', '=', line[1])])
-              # Jika Edit baris
-              if soline_old:
-                product_old = soline_old.product_id.name
-                # Perubahan Kuantitas
-                if quantity:
-                  uos_old = soline_old.product_uom.name
-                  uos_new = uos_old
-                  if uos_id_val:
-                    product_uom = self.env['product.uom'].search([('id', '=', uos_id_val)])
-                    uos_new = product_uom.name
-                  qty_old = sep('%.1f'%(soline_old.product_uom_qty)) + " " + uos_old
-                  qty_new = sep('%.1f'%(quantity)) + " " + uos_new
-                  if qty_old != qty_new:
-                    message=message + product_old + "%0A Qty " +  qty_old + " %E2%9E%A1%EF%B8%8F " + qty_new + "%0A%0A"
-                # Perubahan Harga
-                if harga:
-                  harga_old = sep('%.1f'%(soline_old.price_unit))
-                  harga_new = sep('%.1f'%(harga))
-                  if harga_old != harga_new:
-                    message=message + product_old + "%0A Harga " + harga_old + " %E2%9E%A1%EF%B8%8F " + harga_new + "%0A%0A"
-                # Perubahan Product
-                if product_id_val:
-                  if product_id_val != soline_old.product_id:
-                    message = message + product_old + "%0A %E2%AC%87%EF%B8%8F %0A" + product_new + "%0A%0A"
-              # Jika Baris Baru
-              else:
-                product_new = line[2].get('name')
-                message=message + "%E2%9E%95" + product_new + "%0A%0A"
+              message=message + "%E2%9E%95" + product_new + "%0A%0A"
         if message != "":
           send_telegram(origin_old + " " + toko + "%0A%0A" + message,uid,"sale.order")
     except Exception as e:
