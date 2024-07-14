@@ -67,7 +67,7 @@ class sale_order(models.Model):
             if isinstance(line[2], dict):
               product_id_val = line[2].get('product_id')
               product_new = line[2].get('name')
-              quantity=line[2].get('quantity')
+              quantity=line[2].get('product_uom_qty')
               uos_id_val = line[2].get('product_uom')
               harga=line[2].get('price_unit')
               soline_old = self.env['sale.order.line'].search([('id', '=', line[1])])
@@ -76,12 +76,12 @@ class sale_order(models.Model):
                 product_old = soline_old.product_id.name
                 # Perubahan Kuantitas
                 if quantity:
-                  uos_old = soline_old.uos_id.name
+                  uos_old = soline_old.product_uom.name
                   uos_new = uos_old
                   if uos_id_val:
                     product_uom = self.env['product.uom'].search([('id', '=', uos_id_val)])
                     uos_new = product_uom.name
-                  qty_old = sep('%.1f'%(soline_old.quantity)) + " " + uos_old
+                  qty_old = sep('%.1f'%(soline_old.product_uom_qty)) + " " + uos_old
                   qty_new = sep('%.1f'%(quantity)) + " " + uos_new
                   if qty_old != qty_new:
                     message=message + product_old + "%0A Qty " +  qty_old + " %E2%9E%A1%EF%B8%8F " + qty_new + "%0A%0A"
