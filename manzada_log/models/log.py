@@ -7,10 +7,10 @@ def send_telegram(message, user_id, model):
   chat_id = "-1002196534446"
   # Dani
   if user_id == 11:
+    token = "7090690825:AAGDtcVTUNPfgsLkrRItjocj8uDuHbE4Szs"
     if model == "sale.order":
-      token
+      chat_id = "-1002199221149"
     if model == "account.invoice":
-      token = "7090690825:AAGDtcVTUNPfgsLkrRItjocj8uDuHbE4Szs"
       chat_id = "-1002232803613"
   # Agus
   elif user_id == 9:
