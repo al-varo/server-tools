@@ -21,10 +21,10 @@ def send_telegram(message, user_id, model):
       chat_id = "-1002186361212"
   # Top Office
   elif user_id == 12:
+    token = "7257697185:AAEIJcwtXcRq-3vsTYWbpFDiuwAgEPN7PDc"
     if model == "sale.order":
-      token
+      chat_id = "-1002233244509"
     if model == "account.invoice":
-      token = "7257697185:AAEIJcwtXcRq-3vsTYWbpFDiuwAgEPN7PDc"
       chat_id = "-1002247585047"
   # Zul
   elif user_id == 5:
