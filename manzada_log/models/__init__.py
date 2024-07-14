@@ -5,4 +5,4 @@
 # Copyright (C) 2018  Fauzi Rahman, M.Kom
 #
 ########################################################################
-import tes
+import log
