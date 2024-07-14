@@ -3,26 +3,29 @@ import re, datetime
 import requests
 
 def send_telegram(message, user_id):
+  token = "7263009682:AAGHf5d4k484T_5da4b9yLa9JDvUSd8Sl2o"
+  chat_id = "-1002196534446"
   # Dani
   if user_id == 11:
     token = "7090690825:AAGDtcVTUNPfgsLkrRItjocj8uDuHbE4Szs"
     chat_id = "-1002232803613"
   # Agus
-  if user_id == 9:
+  elif user_id == 9:
     token = "7212599223:AAEe2acDQYFq7Wy0X64eSptbXfsh1Co21Ek"
     chat_id = "-1002186361212"
   # Top Office
-  if user_id == 12:
+  elif user_id == 12:
     token = "7257697185:AAEIJcwtXcRq-3vsTYWbpFDiuwAgEPN7PDc"
     chat_id = "-1002247585047"
   # Zul
-  if user_id == 5:
+  elif user_id == 5:
     token = "7491181830:AAGM7iZVtxqJH624Zno2oaCrqGMTv81jbzY"
     chat_id = "-1002166849753"
   # Dev
-  if user_id == 1:
+  else:
     token = "7263009682:AAGHf5d4k484T_5da4b9yLa9JDvUSd8Sl2o"
     chat_id = "-1002196534446"
+    message = message + "%0AUser ID : " + str(user_id)
   url = "https://api.telegram.org/bot"+token+"/sendMessage?chat_id="+chat_id+"&text="+message
   response = requests.get(url).json()
 
