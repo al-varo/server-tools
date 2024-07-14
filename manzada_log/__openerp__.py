@@ -16,7 +16,7 @@ Mencatat aktifitas user kemudian mengirimkan datanya lewat telegram.
     """,
     'website': 'http://dev.manzada.net',
     'images' : [],
-    'depends' : ['account'],
+    'depends' : ['sale','account'],
     'data': [
     ],
     'js': [
