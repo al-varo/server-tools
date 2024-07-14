@@ -14,10 +14,10 @@ def send_telegram(message, user_id, model):
       chat_id = "-1002232803613"
   # Agus
   elif user_id == 9:
+    token = "7212599223:AAEe2acDQYFq7Wy0X64eSptbXfsh1Co21Ek"
     if model == "sale.order":
       token = "so"
     if model == "account.invoice":
-      token = "7212599223:AAEe2acDQYFq7Wy0X64eSptbXfsh1Co21Ek"
       chat_id = "-1002186361212"
   # Top Office
   elif user_id == 12:
@@ -28,17 +28,17 @@ def send_telegram(message, user_id, model):
       chat_id = "-1002247585047"
   # Zul
   elif user_id == 5:
+    token = "7491181830:AAGM7iZVtxqJH624Zno2oaCrqGMTv81jbzY"
     if model == "sale.order":
       token
     if model == "account.invoice":
-      token = "7491181830:AAGM7iZVtxqJH624Zno2oaCrqGMTv81jbzY"
       chat_id = "-1002166849753"
   # Dev
   else:
+    token = "7263009682:AAGHf5d4k484T_5da4b9yLa9JDvUSd8Sl2o"
     if model == "sale.order":
-      token
+      chat_id = "-1002196534446"
     if model == "account.invoice":
-      token = "7263009682:AAGHf5d4k484T_5da4b9yLa9JDvUSd8Sl2o"
       chat_id = "-1002196534446"
     message = message + "%0AUser ID : " + str(user_id)
   url = "https://api.telegram.org/bot"+token+"/sendMessage?chat_id="+chat_id+"&text="+message
