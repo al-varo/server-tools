@@ -5,4 +5,4 @@
 # Copyright (C) 2018  Fauzi Rahman, M.Kom
 #
 ########################################################################
-import account_invoice
+import log
