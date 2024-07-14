@@ -45,7 +45,7 @@ class sale_order(models.Model):
         origin_old=self.origin
         toko = self.partner_id.name
         message = ""
-        lines_new = vals.get('sale_order_line')
+        lines_new = vals.get('order_line')
         state_old = self.state
         state_new = vals.get('state')
         
@@ -68,7 +68,7 @@ class sale_order(models.Model):
               product_id_val = line[2].get('product_id')
               product_new = line[2].get('name')
               quantity=line[2].get('quantity')
-              uos_id_val = line[2].get('uos_id')
+              uos_id_val = line[2].get('product_uom')
               harga=line[2].get('price_unit')
               soline_old = self.env['sale.order.line'].search([('id', '=', line[1])])
               # Jika Edit baris
