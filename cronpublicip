@@ -1,0 +1,1 @@
+*/5 * * * * { echo 'root'; sleep 2; echo 'bubububuchangeme'; sleep 2; echo 'ifconfig'; sleep 2; } | telnet 192.168.100.1 | grep -q 'P-t-P:10.' && { echo 'root'; sleep 2; echo 'bububuchangeme'; sleep 2; echo 'reset'; } | telnet 192.168.100.1 || echo public
