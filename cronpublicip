@@ -1,1 +1,12 @@
-*/5 * * * * { echo 'root'; sleep 2; echo 'bubububuchangeme'; sleep 2; echo 'ifconfig'; sleep 2; } | telnet 192.168.100.1 | grep -q 'P-t-P:10.' && { echo 'root'; sleep 2; echo 'bububuchangeme'; sleep 2; echo 'reset'; } | telnet 192.168.100.1 || echo public
+*/5 * * * * { echo 'root'; sleep 2; echo 'bublelock9'; sleep 2; echo 'ifconfig'; sleep 2; } | telnet 192.168.100.1 | grep -q 'P-t-P:10.' && { echo 'root'; sleep 2; echo 'bublelock9; sleep 2; echo 'reset'; } | telnet 192.168.100.1 || echo public
+*/5 * * * * ( 
+  { 
+    echo 'root'; sleep 1; 
+    echo 'bublelock9'; sleep 1; 
+    echo 'ifconfig'; sleep 2; 
+  } | telnet 192.168.100.1 | tee /tmp/modem_status.log | grep -E '10\.[0-9]+\.[0-9]+\.[0-9]+' && { 
+    echo 'root'; sleep 1; 
+    echo 'bublelock9'; sleep 1; 
+    echo 'reset'; sleep 1; 
+  } | telnet 192.168.100.1
+) || echo "[$(date)] IP Public - Tidak Reset" >> /var/log/modem_reset.log
